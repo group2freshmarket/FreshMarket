@@ -1,9 +1,12 @@
 package com.user.wongi5.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,16 +37,32 @@ public class HomeController {
 		return new LoginInfo();
 	}
 	
-	@RequestMapping("/home")
+	@GetMapping("/home")
 	public ModelAndView showItems() {
 		ModelAndView mv = new ModelAndView("home");
-		try {
-			List<Item> itemList = (List<Item>) itemDao.getItems();
-			mv.addObject("items", itemList);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		List<Item> itemList = null;
+		itemList = itemDao.getItems();
+
+		List<String> imageList = new ArrayList();
+		for (Item i : itemList) {
+			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
+			String base64Encoded;
+			try {
+				base64Encoded = new String(encodeBase64, "UTF-8");
+				imageList.add(base64Encoded);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println("entering........il");
 		}
-		
+		mv.addObject("imageList", imageList);
+//		if(itemList!=null)
+//		{
+		mv.addObject("itemList", itemList);
+//		}else {
+//		}
 		return mv;
 	}
 	

@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<div class="container">
+	<div class="container-fluid">
 		<div class="col-md-offset-2 col-md-7">
 			<div class="panel panel-info" align="center">
 				<div class="panel-body">
@@ -44,13 +44,10 @@
 						<th>Item Price</th>
 						<th>Item Description</th>
 						<th>Item Image</th>
-
-
 						<th>Update</th>
 						<th>Delete</th>
 					</tr>
 				</thead>
-				<tfoot></tfoot>
 				<tbody>
 					<c:forEach var="i" items="${itemList}" varStatus="status">
 						<tr>

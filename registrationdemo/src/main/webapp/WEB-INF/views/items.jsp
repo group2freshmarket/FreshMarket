@@ -65,7 +65,6 @@
 
 							<td><a href='/FreshMarket/deleteItem?itemId=${i.itemId}'>DELETE
 									ITEMS</a></td>
-							<td></td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -25,6 +25,7 @@
 		</nav>
 
 		<h2 class="text-center">Items</h2>
+		<form method="post">
 			<table width="100%" border="1">
 				<thead>
 					<tr>
@@ -33,6 +34,8 @@
 						<th>Item Type</th>
 						<th>Item Description</th>
 						<th>Item Price</th>
+						<th>Quantity</th>
+						<th>Add to Cart</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,10 +47,18 @@
 							<td><c:out value="${i.itemType}" /></td>
 							<td><c:out value="${i.itemDesc}" /></td>
 							<td><c:out value="${i.itemPrice}" /></td>
+							<td><select name="count">
+							<c:forEach var="j" begin="1" end="${i.itemCount}">
+								<option value="${j}"><c:out value= "${j}" /></option>
+							</c:forEach>
+							</select></td>
+							<td><input type="checkbox" name="${i.itemName}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			<input type="submit" value="Submit Order"> 
+		</form>
 	</div>
 
 </body>

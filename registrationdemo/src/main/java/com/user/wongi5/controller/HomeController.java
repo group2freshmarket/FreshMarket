@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,7 +23,7 @@ import com.user.wongi5.model.Item;
 import com.user.wongi5.model.LoginInfo;
 import com.user.wongi5.model.User;
 
-@Controller
+@Controller("/home")
 @SessionAttributes("user_email")
 public class HomeController {
 
@@ -36,6 +38,7 @@ public class HomeController {
 		return new LoginInfo();
 	}
 	
+	//Shows available items
 	@GetMapping("/home")
 	public ModelAndView showItems() {
 		ModelAndView mv = new ModelAndView("home");
@@ -57,14 +60,13 @@ public class HomeController {
 			System.out.println("entering........il");
 		}
 		mv.addObject("imageList", imageList);
-//		if(itemList!=null)
-//		{
+
 		mv.addObject("itemList", itemList);
-//		}else {
-//		}
+
 		return mv;
 	}
 	
+	//Send to logout from link in nav bar
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		String user = (String) session.getAttribute("user_email");
@@ -75,6 +77,7 @@ public class HomeController {
 		return "logout";
 	}
 	
+	//Navigates to account page and displays user information
 	@GetMapping("/account")
 	public String showUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
 		
@@ -88,4 +91,59 @@ public class HomeController {
 		return "account";
 	}
 	
+	@PostMapping("/review")
+	public ModelAndView displayData(@ModelAttribute("user") User user, Model model, HttpSession session, HttpServletRequest request) {
+		
+		//display user's name
+		User userDetails = authDao.getUser((String)session.getAttribute("user_email"));
+		
+		user.setName(userDetails.getName());
+		
+		//display data
+		List<Item> items = null;
+		items = itemDao.getItems();
+		
+		List<Item> itemList = new ArrayList<Item>();
+		List<Integer> quantity = new ArrayList<Integer>();
+		
+		//gathering data for display
+		for(int i = 0; i < items.size(); i++) {
+			int id = items.get(i).getItemId();
+			String check = request.getParameter(Integer.toString(id));
+			
+			if(check != null) {
+				String qty = request.getParameter("count"+id);
+				items.add(itemDao.getItem(id));
+				quantity.add(Integer.parseInt(qty));
+			}
+		}
+		
+		//create view and display
+		
+		ModelAndView mv = new ModelAndView("review");
+		
+		List<String> imageList = new ArrayList<String>();
+		
+		for (Item i : itemList) {
+			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
+			String base64Encoded;
+			try {
+				base64Encoded = new String(encodeBase64, "UTF-8");
+				imageList.add(base64Encoded);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			System.out.println("entering........il");
+		}
+		
+		mv.addObject("imageList", imageList);
+
+		mv.addObject("itemList", itemList);
+		
+		mv.addObject("quantityList", quantity);
+		
+		return mv;
+	}
 }

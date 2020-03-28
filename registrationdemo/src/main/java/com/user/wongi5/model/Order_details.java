@@ -1,16 +1,16 @@
 package com.user.wongi5.model;
 
 public class Order_details {
-	private int itemId;
+	private int detailId;
 	private int orderId;
 	private int itemQty;
 	private double itemPrice;
 	private int item_total_Price;
-	public int getItemId() {
-		return itemId;
+	public int getDetailId() {
+		return detailId;
 	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
+	public void setDetailId(int detailId) {
+		this.detailId = detailId;
 	}
 	public int getOrderId() {
 		return orderId;
@@ -38,7 +38,7 @@ public class Order_details {
 	}
 	@Override
 	public String toString() {
-		return "Order_details [itemId=" + itemId + ", orderId=" + orderId + ", itemQty=" + itemQty + ", itemPrice="
+		return "Order_details [detailId=" + detailId + ", orderId=" + orderId + ", itemQty=" + itemQty + ", itemPrice="
 				+ itemPrice + ", item_total_Price=" + item_total_Price + "]";
 	}
 	

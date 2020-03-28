@@ -21,6 +21,30 @@
 			</ul>
 		</nav>
 
+		<h2>Order for ${user.name}...</h2>
+
+		<table width="100%" border="1">
+			<thead>
+				<tr>
+					<th>Item Name</th>
+					<th>Item Price</th>
+					<th>Item Quantity</th>
+					<th>Item Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="i" items="${itemList}" varStatus="status">
+					<tr>
+						<td><img
+							src='data:image/jpg;base64,<c:out value = " ${imageList[status.index]}"/>' /></td>
+						<td><c:out value="${i.itemName}" /></td>
+						<td><c:out value="${i.itemPrice}" /></td>
+						<td><c:out value="${quantityList[status.index]}" /></td>
+						<td><c:out value="${i.itemPrice * quantityList[status.index]}" /></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

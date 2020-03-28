@@ -25,7 +25,7 @@
 		</nav>
 
 		<h2 class="text-center">Items</h2>
-		<form method="post">
+		<form method="post" action="review">
 			<table width="100%" border="1">
 				<thead>
 					<tr>
@@ -47,17 +47,17 @@
 							<td><c:out value="${i.itemType}" /></td>
 							<td><c:out value="${i.itemDesc}" /></td>
 							<td><c:out value="${i.itemPrice}" /></td>
-							<td><select name="count">
+							<td><select name="count${i.itemId}">
 							<c:forEach var="j" begin="1" end="${i.itemCount}">
 								<option value="${j}"><c:out value= "${j}" /></option>
 							</c:forEach>
 							</select></td>
-							<td><input type="checkbox" name="${i.itemName}" /></td>
+							<td><input type="checkbox" name="${i.itemId}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
-			<input type="submit" value="Submit Order"> 
+			<button type="submit">Submit</button>
 		</form>
 	</div>
 

@@ -28,9 +28,11 @@ CREATE TABLE Purchase_History(
 );
 
 CREATE TABLE Order_details(
-  itemId INTEGER auto_increment PRIMARY KEY,
+  detailId INTEGER auto_increment PRIMARY KEY,
+  itemId INTEGER,
   orderId INTEGER,
   itemQty INTEGER,
   itemPrice DOUBLE,
-  foreign key (orderId) references Purchase_History(orderId)
+  foreign key (orderId) references Purchase_History(orderId),
+  foreign key (itemId) references Item(itemId)
 );

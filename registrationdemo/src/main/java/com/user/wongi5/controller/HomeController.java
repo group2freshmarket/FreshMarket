@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,7 +42,7 @@ public class HomeController {
 		List<Item> itemList = null;
 		itemList = itemDao.getItems();
 
-		List<String> imageList = new ArrayList();
+		List<String> imageList = new ArrayList<String>();
 		for (Item i : itemList) {
 			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
 			String base64Encoded;

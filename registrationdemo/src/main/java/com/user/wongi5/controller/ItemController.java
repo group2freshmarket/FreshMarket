@@ -38,7 +38,7 @@ public class ItemController {
 		List<Item> itemList = null;
 		itemList = itemDao.getItems();
 
-		List<String> imageList = new ArrayList();
+		List<String> imageList = new ArrayList<String>();
 		for (Item i : itemList) {
 			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
 			String base64Encoded;
@@ -104,7 +104,7 @@ public class ItemController {
 		ModelAndView mv = new ModelAndView("items");
 		try {
 
-			List itemList = (List) itemDao.getItems();
+			List<?> itemList = (List<?>) itemDao.getItems();
 			mv.addObject("items", itemList);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

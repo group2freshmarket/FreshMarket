@@ -2,10 +2,11 @@ package com.user.wongi5.model;
 
 public class Order_details {
 	private int detailId;
+	private int itemId;
 	private int orderId;
 	private int itemQty;
 	private double itemPrice;
-	private int item_total_Price;
+	
 	public int getDetailId() {
 		return detailId;
 	}
@@ -30,17 +31,18 @@ public class Order_details {
 	public void setItemPrice(double itemPrice) {
 		this.itemPrice = itemPrice;
 	}
-	public int getItem_total_Price() {
-		return item_total_Price;
+	public int getItemId() {
+		return itemId;
 	}
-	public void setItem_total_Price(int item_total_Price) {
-		this.item_total_Price = item_total_Price;
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
 	}
 	@Override
 	public String toString() {
-		return "Order_details [detailId=" + detailId + ", orderId=" + orderId + ", itemQty=" + itemQty + ", itemPrice="
-				+ itemPrice + ", item_total_Price=" + item_total_Price + "]";
+		return "Order_details [detailId=" + detailId + ", itemId=" + itemId + ", orderId=" + orderId + ", itemQty="
+				+ itemQty + ", itemPrice=" + itemPrice + "]";
 	}
+
 	
 	
 	

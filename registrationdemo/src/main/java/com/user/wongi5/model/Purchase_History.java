@@ -3,8 +3,17 @@ package com.user.wongi5.model;
 public class Purchase_History {
 
 	private int orderId;
+	private String date;
 	private String email;
 	private double total_Price;
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
 	public int getOrderId() {
 		return orderId;
 	}
@@ -25,8 +34,11 @@ public class Purchase_History {
 	}
 	@Override
 	public String toString() {
-		return "Purchase_History [orderId=" + orderId + ", email=" + email + ", total_Price=" + total_Price + "]";
+		return "Purchase_History [orderId=" + orderId + ", date=" + date + ", email=" + email + ", total_Price="
+				+ total_Price + "]";
 	}
+	
+
 	
 	
 }

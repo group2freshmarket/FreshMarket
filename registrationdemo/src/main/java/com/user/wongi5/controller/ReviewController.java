@@ -1,6 +1,8 @@
 package com.user.wongi5.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.user.wongi5.dao.AuthDao;
 import com.user.wongi5.dao.ItemDao;
+import com.user.wongi5.dao.ProcessDao;
 import com.user.wongi5.model.Item;
+import com.user.wongi5.model.Purchase_History;
 import com.user.wongi5.model.User;
 
 @Controller
@@ -28,6 +32,9 @@ public class ReviewController {
 
 	@Autowired
 	AuthDao authDao;
+	
+	@Autowired
+	ProcessDao processDao;
 
 	@GetMapping("/review")
 	public ModelAndView showOrder(@ModelAttribute("user") User user, HttpSession session) {
@@ -119,8 +126,15 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/process")
-	public String processOrder() {
+	public String processOrder(HttpServletRequest request) {
+		Purchase_History p = new Purchase_History();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date();
 		
+		p.setDate(format.format(date));
+		
+		
+		boolean statusPurchase = processDao.addPurchase(p);
 		
 		return "process-success";
 	}

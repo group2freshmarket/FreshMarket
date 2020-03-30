@@ -95,7 +95,7 @@ NamedParameterJdbcTemplate jdbcTemplate;
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM ITEM WHERE ITEMID=:itemId";
 		  
-		  return (Item) jdbcTemplate.queryForObject(sql, getSqlParameterByModel((itemId)), new ItemMapper());
+		  return (Item) jdbcTemplate.queryForObject(sql, getSqlParameterByModel(itemId), new ItemMapper());
 		
 	}
 

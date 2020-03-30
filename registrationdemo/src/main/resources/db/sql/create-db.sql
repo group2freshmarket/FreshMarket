@@ -23,6 +23,7 @@ CREATE TABLE Item (
 
 CREATE TABLE Purchase_History(
   orderId INTEGER auto_increment PRIMARY KEY,
+  pur_date String,
   email VARCHAR(255),
   total_Price DOUBLE
 );
@@ -34,5 +35,6 @@ CREATE TABLE Order_details(
   itemQty INTEGER,
   itemPrice DOUBLE,
   foreign key (orderId) references Purchase_History(orderId),
-  foreign key (itemId) references Item(itemId)
+  foreign key (itemId) references Item(itemId),
+  foreign key (itemPrice) references Item(itemPrice)
 );

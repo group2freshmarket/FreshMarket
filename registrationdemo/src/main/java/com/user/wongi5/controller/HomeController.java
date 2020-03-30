@@ -24,7 +24,6 @@ import com.user.wongi5.model.LoginInfo;
 import com.user.wongi5.model.User;
 
 @Controller
-@SessionAttributes("user_email")
 public class HomeController {
 
 	@Autowired
@@ -91,60 +90,31 @@ public class HomeController {
 		return "account";
 	}
 	
-	@PostMapping("/review")
-	public String displayData(@ModelAttribute("user") User user, HttpSession session, HttpServletRequest request) {
-		
-		//display user's name
-		User userDetails = authDao.getUser((String)session.getAttribute("user_email"));
-		
-		user.setName(userDetails.getName());
+	@PostMapping("/home")
+	public String displayData(HttpServletRequest request, HttpSession session) {
 		
 		//display data
-//		List<Item> items = null;
-//		items = itemDao.getItems();
-//		
-//		List<Item> itemList = new ArrayList<Item>();
-//		List<Integer> quantity = new ArrayList<Integer>();
-//		
-//		//gathering data for display
-//		for(int i = 0; i < items.size(); i++) {
-//			int id = items.get(i).getItemId();
-//			String check = request.getParameter(Integer.toString(id));
-//			
-//			if(check != null) {
-//				String qty = request.getParameter("count"+id);
-//				items.add(itemDao.getItem(id));
-//				quantity.add(Integer.parseInt(qty));
-//			}
-//		}
+		List<Item> items = null;
+		items = itemDao.getItems();
 		
-		//create view and display
+		List<Item> itemList = new ArrayList<Item>();
+		List<Integer> quantity = new ArrayList<Integer>();
 		
-//		ModelAndView mv = new ModelAndView("review");
-//		
-//		List<String> imageList = new ArrayList<String>();
-//		
-//		for (Item i : itemList) {
-//			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
-//			String base64Encoded;
-//			try {
-//				base64Encoded = new String(encodeBase64, "UTF-8");
-//				imageList.add(base64Encoded);
-//			} catch (UnsupportedEncodingException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//
-//			System.out.println("entering........il");
-//		}
-//		
-//		mv.addObject("imageList", imageList);
-//
-//		mv.addObject("itemList", itemList);
-//		
-//		mv.addObject("quantityList", quantity);
-//		
-//		return mv;
-		return "review";
+		//gathering data for display
+		for(int i = 0; i < items.size(); i++) {
+			int id = items.get(i).getItemId();
+			String check = request.getParameter(Integer.toString(id));
+			
+			if(check != null) {
+				String qty = request.getParameter("count"+id);
+				itemList.add(itemDao.getItem(id));
+				quantity.add(Integer.parseInt(qty));
+			}
+		}
+		
+		session.setAttribute("itemList", itemList);
+		session.setAttribute("quantity", quantity);
+		
+		return "redirect:/review";
 	}
 }

@@ -25,7 +25,7 @@
 		</nav>
 
 		<h2 class="text-center">Items</h2>
-		<form method="post" action="review">
+		<form method="post" action="home">
 			<table width="100%" border="1">
 				<thead>
 					<tr>

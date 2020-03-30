@@ -45,16 +45,16 @@
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan='4'>Sub-Total</td>
-					<td></td>
+					<td colspan='4' align="right">Sub-Total</td>
+					<td><c:out value="${sub}" /></td>
 				</tr>
 				<tr>
-					<td colspan='4'>Tax</td>
-					<td></td>
+					<td colspan='4' align="right">Tax</td>
+					<td><c:out value="${tax}" /></td>
 				</tr>
 				<tr>
-					<td colspan='4'>Total</td>
-					<td></td>
+					<td colspan='4' align="right">Total</td>
+					<td><c:out value="${tax+sub}" /></td>
 				</tr>
 			</tbody>
 		</table>

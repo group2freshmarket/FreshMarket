@@ -63,6 +63,19 @@ public class ReviewController {
 		mv.addObject("itemList", itemList);
 
 		mv.addObject("quantityList", quantity);
+		
+		//calculate totals
+		double sub = 0;
+		
+		
+		for(int i = 0; i < itemList.size(); i++) {
+			sub += itemList.get(i).getItemPrice() * quantity.get(i);
+		}
+		
+		double tax = sub * 0.12;
+		
+		mv.addObject("sub", sub);
+		mv.addObject("tax", tax);
 
 		return mv;
 	}

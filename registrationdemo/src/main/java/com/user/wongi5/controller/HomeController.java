@@ -23,7 +23,7 @@ import com.user.wongi5.model.Item;
 import com.user.wongi5.model.LoginInfo;
 import com.user.wongi5.model.User;
 
-@Controller("/home")
+@Controller
 @SessionAttributes("user_email")
 public class HomeController {
 
@@ -79,7 +79,7 @@ public class HomeController {
 	
 	//Navigates to account page and displays user information
 	@GetMapping("/account")
-	public String showUser(@ModelAttribute("user") User user, Model model, HttpSession session) {
+	public String showUser(@ModelAttribute("user") User user, HttpSession session) {
 		
 		User userDetails = authDao.getUser((String)session.getAttribute("user_email"));
 		
@@ -92,7 +92,7 @@ public class HomeController {
 	}
 	
 	@PostMapping("/review")
-	public ModelAndView displayData(@ModelAttribute("user") User user, Model model, HttpSession session, HttpServletRequest request) {
+	public String displayData(@ModelAttribute("user") User user, HttpSession session, HttpServletRequest request) {
 		
 		//display user's name
 		User userDetails = authDao.getUser((String)session.getAttribute("user_email"));
@@ -100,50 +100,51 @@ public class HomeController {
 		user.setName(userDetails.getName());
 		
 		//display data
-		List<Item> items = null;
-		items = itemDao.getItems();
-		
-		List<Item> itemList = new ArrayList<Item>();
-		List<Integer> quantity = new ArrayList<Integer>();
-		
-		//gathering data for display
-		for(int i = 0; i < items.size(); i++) {
-			int id = items.get(i).getItemId();
-			String check = request.getParameter(Integer.toString(id));
-			
-			if(check != null) {
-				String qty = request.getParameter("count"+id);
-				items.add(itemDao.getItem(id));
-				quantity.add(Integer.parseInt(qty));
-			}
-		}
+//		List<Item> items = null;
+//		items = itemDao.getItems();
+//		
+//		List<Item> itemList = new ArrayList<Item>();
+//		List<Integer> quantity = new ArrayList<Integer>();
+//		
+//		//gathering data for display
+//		for(int i = 0; i < items.size(); i++) {
+//			int id = items.get(i).getItemId();
+//			String check = request.getParameter(Integer.toString(id));
+//			
+//			if(check != null) {
+//				String qty = request.getParameter("count"+id);
+//				items.add(itemDao.getItem(id));
+//				quantity.add(Integer.parseInt(qty));
+//			}
+//		}
 		
 		//create view and display
 		
-		ModelAndView mv = new ModelAndView("review");
-		
-		List<String> imageList = new ArrayList<String>();
-		
-		for (Item i : itemList) {
-			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
-			String base64Encoded;
-			try {
-				base64Encoded = new String(encodeBase64, "UTF-8");
-				imageList.add(base64Encoded);
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			System.out.println("entering........il");
-		}
-		
-		mv.addObject("imageList", imageList);
-
-		mv.addObject("itemList", itemList);
-		
-		mv.addObject("quantityList", quantity);
-		
-		return mv;
+//		ModelAndView mv = new ModelAndView("review");
+//		
+//		List<String> imageList = new ArrayList<String>();
+//		
+//		for (Item i : itemList) {
+//			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
+//			String base64Encoded;
+//			try {
+//				base64Encoded = new String(encodeBase64, "UTF-8");
+//				imageList.add(base64Encoded);
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//
+//			System.out.println("entering........il");
+//		}
+//		
+//		mv.addObject("imageList", imageList);
+//
+//		mv.addObject("itemList", itemList);
+//		
+//		mv.addObject("quantityList", quantity);
+//		
+//		return mv;
+		return "review";
 	}
 }

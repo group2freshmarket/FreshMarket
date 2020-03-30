@@ -42,24 +42,25 @@ public class LoginController {
 
 		System.out.println("Entering.."+user_email);
 	    if(user_email != null) {
-	    	return "home";
+	    	return "redirect:/home";
 	    }
 	    return "login";
 	}
 
 	@PostMapping("/login") 
-	public String login(@ModelAttribute("loginInfo") LoginInfo loginInfo, Model model){
+	public String login(@ModelAttribute("loginInfo") LoginInfo loginInfo, HttpSession session){
 		boolean status=authDao.checkUser(loginInfo.getUserType(), loginInfo.getEmail(), loginInfo.getPassword());
-		model.addAttribute("message", "Login Fail");
+		session.setAttribute("message", "Login Fail");
 		System.out.println("status : "+status);
 		if(status==true) {
-			model.addAttribute("user_email", loginInfo.getEmail());
-			model.addAttribute("message", "Login Successful");
+			session.setAttribute("user_email", loginInfo.getEmail());
+			session.setAttribute("message", "Login Successful");
  
-			if(loginInfo.getUserType().equalsIgnoreCase("customer")) 
-				return "home";
-			else
-				return "items";
+			if(loginInfo.getUserType().equalsIgnoreCase("customer")) {
+				return "redirect:/home";
+			} else {
+				return "redirect:/items";
+			}
 		}
 		return "login";
 	}

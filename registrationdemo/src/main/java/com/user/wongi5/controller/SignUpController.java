@@ -55,10 +55,6 @@ public class SignUpController {
 		System.out.println("Password : " + user.getPassword());
 		System.out.println("Type : " + user.getUserType());
 		
-		//List<User> users = userDao.findAll();
-
-		//System.out.println(users);
-		
 		boolean status=authDao.addUser(user);
 
 		//model.addAttribute("user", users);
@@ -69,7 +65,6 @@ public class SignUpController {
 		}else {
 			model.addAttribute("message", "User SignUp failed.");
 		}
-//		model.addAttribute("user", user);
 
 		return "signup-success";
 	}

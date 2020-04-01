@@ -23,6 +23,7 @@ import com.user.wongi5.dao.ItemDao;
 import com.user.wongi5.dao.Order_detailsDao;
 import com.user.wongi5.dao.Purchase_HistoryDao;
 import com.user.wongi5.model.Item;
+import com.user.wongi5.model.Order_details;
 import com.user.wongi5.model.Purchase_History;
 import com.user.wongi5.model.User;
 
@@ -37,6 +38,9 @@ public class ReviewController {
 	
 	@Autowired
 	Purchase_HistoryDao purchaseDao;
+	
+	@Autowired
+	Order_detailsDao orderDao;
 
 	@GetMapping("/review")
 	public ModelAndView showOrder(@ModelAttribute("user") User user, HttpSession session) {
@@ -130,10 +134,12 @@ public class ReviewController {
 		return model;
 	}
 	
+	//Processing order form
 	@PostMapping("/process")
 	public String processOrder(HttpServletRequest request, HttpSession session, Model model) {
+		//Create instance of purchase and set all values check if added properly
 		Purchase_History p = new Purchase_History();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 		Date date = new Date();
 		
 		p.setDate(format.format(date));
@@ -143,7 +149,37 @@ public class ReviewController {
 		boolean statusPurchase = purchaseDao.addPurchase(p);
 		
 		if(statusPurchase == true) {
-			model.addAttribute("message", "Order Successful!");
+			//find id of purchase history
+			//Get all lists of cart to loop through and input into order_details
+			Purchase_History p1 = new Purchase_History();
+			p1 = purchaseDao.getPurchase((String) session.getAttribute("user_email"), format.format(date));
+			
+			int orderId = p1.getOrderId();
+			
+			List<Item> items = (List<Item>) session.getAttribute("itemList");
+			List<Integer> quantity = (List<Integer>) session.getAttribute("quantity");
+			
+			boolean status = true;
+			
+			for(int i = 0; i < items.size(); i++) {
+				if(status) {
+					Order_details o = new Order_details();
+					
+					o.setItemId(items.get(i).getItemId());
+					o.setOrderId(orderId);
+					o.setItemQty(quantity.get(i));
+					o.setItemPrice(items.get(i).getItemPrice());
+					
+					status = orderDao.addOrder_details(o);
+				} else 
+					break;
+			}
+			
+			if(status) {
+				model.addAttribute("message", "Order Successful!");
+			} else {
+				model.addAttribute("message", "Please try again.");
+			}
 		} else {
 			model.addAttribute("message", "Please try again.");
 		}

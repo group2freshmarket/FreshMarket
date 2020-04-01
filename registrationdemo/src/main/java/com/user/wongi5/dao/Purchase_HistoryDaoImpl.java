@@ -2,6 +2,8 @@ package com.user.wongi5.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -51,17 +53,14 @@ public class Purchase_HistoryDaoImpl implements Purchase_HistoryDao {
 	}
 	
 	@Override
-	public Purchase_History getPurchase(int id) {
-		String sql = "SELECT * FROM Purchase_History WHERE orderId=:id";
+	public Purchase_History getPurchase(String email, String date) {
+		String sql = "SELECT * FROM Purchase_History WHERE email=:email AND pur_date=:date";
 		
-		return (Purchase_History) jdbcTemplate.queryForObject(sql, getSqlParameterByModelPurchaseP(id), new ItemMapperP());
-	}
-	
-	private SqlParameterSource getSqlParameterByModelPurchaseP(int id) {
-
-		MapSqlParameterSource parameterSource=new MapSqlParameterSource();
-		parameterSource.addValue("orderId", id);
-		return parameterSource;
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("email", email);
+		params.put("date", date);
+		
+		return (Purchase_History) jdbcTemplate.queryForObject(sql, params, new ItemMapperP());
 	}
 	
 	private static final class ItemMapperP implements RowMapper<Purchase_History>{

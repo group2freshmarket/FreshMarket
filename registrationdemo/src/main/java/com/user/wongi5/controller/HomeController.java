@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.user.wongi5.dao.AuthDao;
 import com.user.wongi5.dao.ItemDao;
+import com.user.wongi5.dao.Order_detailsDao;
+import com.user.wongi5.dao.Purchase_HistoryDao;
 import com.user.wongi5.model.Item;
 import com.user.wongi5.model.LoginInfo;
+import com.user.wongi5.model.Purchase_History;
 import com.user.wongi5.model.User;
 
 @Controller
@@ -29,6 +33,12 @@ public class HomeController {
 	
 	@Autowired
 	AuthDao authDao;
+	
+	@Autowired
+	Purchase_HistoryDao purDao;
+	
+	@Autowired
+	Order_detailsDao orderDao;
 	
 	@ModelAttribute("loginInfo")
 	public LoginInfo loginForm() {
@@ -53,13 +63,11 @@ public class HomeController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			System.out.println("entering........il");
 		}
 		mv.addObject("imageList", imageList);
 
-		mv.addObject("itemList", itemList);
-
+		mv.addObject("itemList", itemList);	
+		
 		return mv;
 	}
 	
@@ -76,24 +84,45 @@ public class HomeController {
 	
 	//Navigates to account page and displays user information
 	@GetMapping("/account")
-	public String showUser(@ModelAttribute("user") User user, HttpSession session) {
+	public String showAccount(@ModelAttribute("user") User user, HttpSession session, Model model) {
 		
-		User userDetails = authDao.getUser((String)session.getAttribute("user_email"));
+		String email = (String)session.getAttribute("user_email");
+		
+		User userDetails = authDao.getUser(email);
 		
 		user.setName(userDetails.getName());
 		user.setEmail(userDetails.getEmail());
 		user.setPassword(userDetails.getPassword());
 		user.setUserType(userDetails.getUserType());
 		
+		List<Purchase_History> list = purDao.getAllPurchases(email);
+
+		model.addAttribute("purchases", list);
+		
 		return "account";
 	}
+	
+	@PostMapping("/account")
+	public String orderDetailsForm(HttpSession session) {
+		session.setAttribute("review", (String) session.getAttribute("select"));
+		
+		return "order_details";
+	}
+	
+	@GetMapping("/order_details")
+	public String displayOrderDetails(HttpSession session) {
+		
+		
+		
+		return "order-details";
+	}
+	
 	
 	@PostMapping("/home")
 	public String displayData(HttpServletRequest request, HttpSession session) {
 		
 		//display data
-		List<Item> items = null;
-		items = itemDao.getItems();
+		List<Item> items = itemDao.getItems();
 		
 		List<Item> itemList = new ArrayList<Item>();
 		List<Integer> quantity = new ArrayList<Integer>();

@@ -22,20 +22,38 @@
 				<li class="nav-item"><a class="nav-link" href="logout">LogOut</a></li>
 			</ul>
 		</nav>
-			<table class="table table-striped table-bordered">
+		<table class="table table-striped table-bordered">
+			<tr>
+				<td><b>Email </b>: ${user.email}</td>
+			</tr>
+			<tr>
+				<td><b>Name </b> : ${user.name}</td>
+			</tr>
+			<tr>
+				<td><b>Password </b> : ${user.password}</td>
+			</tr>
+			<tr>
+				<td><b>User Type </b>: ${user.userType}</td>
+			</tr>
+		</table>
+		<br />
+		<form action="account" method="post">
+			<table border="1">
 				<tr>
-					<td><b>Email </b>: ${user.email}</td>
+					<th>Date</th>
+					<th>Total Price</th>
+					<th>Select</th>
 				</tr>
-				<tr>
-					<td><b>Name </b> : ${user.name}</td>
-				</tr>
-				<tr>
-					<td><b>Password </b> : ${user.password}</td>
-				</tr>
-				<tr>
-					<td><b>User Type </b>: ${user.userType}</td>
-				</tr>
+				<c:forEach var="i" items="${purchases}" varStatus="status">
+					<tr>
+						<td><c:out value="${i.date}" /></td>
+						<td><c:out value="${i.total_Price}" /></td>
+						<td><input type="radio" name="select" value="${i.orderId}" />
+					</tr>
+				</c:forEach>
 			</table>
+			<button type="submit">Submit</button>
+		</form>
 	</div>
 </body>
 </html>

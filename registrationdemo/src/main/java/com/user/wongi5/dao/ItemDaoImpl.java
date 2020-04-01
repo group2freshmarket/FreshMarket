@@ -103,12 +103,10 @@ NamedParameterJdbcTemplate jdbcTemplate;
 		String sql="SELECT * FROM ITEM";
 		List<Item> itemList = null;
 		//Map<String, Object> params = new HashMap<String, Object>();
-		System.out.println("Fetching items......!!!");
 		itemList=jdbcTemplate.query(sql,new ItemMapper());
 		//System.out.println("item counts : "+itemList.size());
 		if(itemList!=null)
 		{
-			System.out.println("Details : getItems");
 			return itemList;
 		}
 		return null;

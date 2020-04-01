@@ -7,8 +7,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Account</title>
-<link href="<c:url value="/resources/css/bootstrap.min.css" />"
-	rel="stylesheet">
+<link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 </head>
@@ -36,6 +35,9 @@
 				<td><b>User Type </b>: ${user.userType}</td>
 			</tr>
 		</table>
+		<form action="account" method="post">
+		<button type="submit" name="submit" value="edit">Edit Info</button>
+		</form>
 		<br />
 		<form action="account" method="post">
 			<table border="1">
@@ -52,7 +54,7 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<button type="submit">Submit</button>
+			<button type="submit" name="submit" value="view">View</button>
 		</form>
 		<a href="home">Back</a>
 	</div>

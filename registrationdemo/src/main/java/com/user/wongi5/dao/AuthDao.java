@@ -6,5 +6,6 @@ public interface AuthDao {
 
 	boolean addUser(User customer);
 	boolean checkUser(String userType,String email,String password);
+	boolean updateUser(User user);
 	User getUser(String email);
 }

@@ -105,9 +105,14 @@ public class HomeController {
 	
 	@PostMapping("/account")
 	public String orderDetailsForm(HttpServletRequest request, HttpSession session) {
-		session.setAttribute("review", (String) request.getParameter("select"));
 		
-		return "redirect:/order_details";
+		if(request.getParameter("submit").equals("view")) {
+			session.setAttribute("review", (String) request.getParameter("select"));
+			
+			return "redirect:/order_details";
+		} else {
+			return "redirect:/editAccount";
+		}
 	}
 	
 	@GetMapping("/order_details")
@@ -133,6 +138,36 @@ public class HomeController {
 		return "order_details";
 	}
 	
+	@GetMapping("/editAccount")
+	public String editAccount(@ModelAttribute("user") User user, Model model, HttpSession session) {
+		
+		String email = (String)session.getAttribute("user_email");
+		
+		User userDetails = authDao.getUser(email);
+		
+		user.setName(userDetails.getName());
+		user.setEmail(userDetails.getEmail());
+		user.setPassword(userDetails.getPassword());
+		user.setUserType(userDetails.getUserType());
+		
+		return "editAccount";
+	}
+	
+	@PostMapping("/editAccount")
+	public String updateAccount(@ModelAttribute("user") User user, Model model) {
+		boolean status = authDao.updateUser(user);
+		
+		System.out.println("EName : " + user.getEmail());
+		System.out.println("Name : " + user.getName());
+		System.out.println("Password : " + user.getPassword());
+		System.out.println("Type : " + user.getUserType());
+		
+		if(status) {
+			return "account";
+		}
+		
+		return "editAccount";
+	}
 	
 	@PostMapping("/home")
 	public String displayData(HttpServletRequest request, HttpSession session) {

@@ -98,5 +98,19 @@ public class AuthDaoImpl implements AuthDao {
 		return user;
 	}
 
+	@Override
+	public boolean updateUser(User user) {
+		boolean res = true;
+		try {
+			String sql = "UPDATE User SET name=:name, password=:password, userType=:userType WHERE email=:email";
+			
+			jdbcTemplate.update(sql, getSqlParameterByModel(user));
+		} catch (Exception e) {
+			res = false;
+			System.out.println(e.getMessage());
+		}
+		return res;
+	}
+
 	
 }

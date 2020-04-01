@@ -1,7 +1,7 @@
-DROP TABLE User IF EXISTS;
-DROP TABLE Item IF EXISTS;
 DROP TABLE Order_details IF EXISTS;
 DROP TABLE Purchase_History IF EXISTS;
+DROP TABLE Item IF EXISTS;
+DROP TABLE User IF EXISTS;
 
 
 CREATE TABLE User (
@@ -23,7 +23,7 @@ CREATE TABLE Item (
 
 CREATE TABLE Purchase_History(
   orderId INTEGER auto_increment PRIMARY KEY,
-  pur_date String,
+  pur_date VARCHAR(255),
   email VARCHAR(255),
   total_Price DOUBLE
 );

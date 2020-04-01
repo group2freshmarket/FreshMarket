@@ -19,7 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.user.wongi5.dao.AuthDao;
 import com.user.wongi5.dao.ItemDao;
-import com.user.wongi5.dao.ProcessDao;
+import com.user.wongi5.dao.Order_detailsDao;
+import com.user.wongi5.dao.Purchase_HistoryDao;
 import com.user.wongi5.model.Item;
 import com.user.wongi5.model.Purchase_History;
 import com.user.wongi5.model.User;
@@ -34,7 +35,7 @@ public class ReviewController {
 	AuthDao authDao;
 	
 	@Autowired
-	ProcessDao processDao;
+	Purchase_HistoryDao purchaseDao;
 
 	@GetMapping("/review")
 	public ModelAndView showOrder(@ModelAttribute("user") User user, HttpSession session) {
@@ -128,13 +129,10 @@ public class ReviewController {
 	@PostMapping("/process")
 	public String processOrder(HttpServletRequest request) {
 		Purchase_History p = new Purchase_History();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-		Date date = new Date();
-		
-		p.setDate(format.format(date));
+
 		
 		
-		boolean statusPurchase = processDao.addPurchase(p);
+		//boolean statusPurchase = purchaseDao.addPurchase(p);
 		
 		return "process-success";
 	}

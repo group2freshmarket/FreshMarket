@@ -22,6 +22,7 @@ import com.user.wongi5.dao.Order_detailsDao;
 import com.user.wongi5.dao.Purchase_HistoryDao;
 import com.user.wongi5.model.Item;
 import com.user.wongi5.model.LoginInfo;
+import com.user.wongi5.model.Order_details;
 import com.user.wongi5.model.Purchase_History;
 import com.user.wongi5.model.User;
 
@@ -51,7 +52,7 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("home");
 		List<Item> itemList = null;
 		itemList = itemDao.getItems();
-
+		
 		List<String> imageList = new ArrayList<String>();
 		for (Item i : itemList) {
 			byte[] encodeBase64 = Base64.encodeBase64(i.getItemImage());
@@ -103,18 +104,33 @@ public class HomeController {
 	}
 	
 	@PostMapping("/account")
-	public String orderDetailsForm(HttpSession session) {
-		session.setAttribute("review", (String) session.getAttribute("select"));
+	public String orderDetailsForm(HttpServletRequest request, HttpSession session) {
+		session.setAttribute("review", (String) request.getParameter("select"));
 		
-		return "order_details";
+		return "redirect:/order_details";
 	}
 	
 	@GetMapping("/order_details")
-	public String displayOrderDetails(HttpSession session) {
+	public String displayOrderDetails(HttpSession session, Model model) {
 		
+		String orderId = (String) session.getAttribute("review");
 		
+		Purchase_History p = purDao.getPurchase(Integer.parseInt(orderId));
 		
-		return "order-details";
+		model.addAttribute("date", p.getDate());
+		
+		List<Order_details> o = orderDao.getAllDetails(p.getOrderId());
+		
+		model.addAttribute("details", o);
+	
+		List<String> names = new ArrayList<String>();
+		
+		for(int i = 0; i < o.size(); i++) {
+			names.add(itemDao.getItem(o.get(i).getItemId()).getItemName());
+		}
+		model.addAttribute("names", names);
+		
+		return "order_details";
 	}
 	
 	

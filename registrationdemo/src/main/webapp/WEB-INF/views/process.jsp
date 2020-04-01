@@ -21,16 +21,16 @@
 			</ul>
 		</nav>
 	</div>
-	<p>
-		<h2>Order for ${user}</h2>
-		<h4>Method: ${method} </h4>
-		<h4>Time: ${time} </h4>
-		<h4>Discounts: ${discount}</h4>
-		<h4>Total: ${total}</h4>
+	<h2>Order for ${user}</h2>
+	<h4>Method: ${method}</h4>
+	<h4>Time: ${time}</h4>
+	<h4>Discounts: ${discount}</h4>
+	<h4>Total: ${total}</h4>
 	<form method="post" action="process">
-		Card Number: <input type="text" name="cardnumber" placeholder="#### - #### - #### - ####"> <br />
-		Expiry Date: <input type="text" name="exdate" placeholder="mm/yy" /> <br />
-		CVV: <input type="text" name="cvv" placeholder="###"> <br />
+		Card Number: <input type="text" name="cardnumber"
+			placeholder="#### - #### - #### - ####"> <br /> Expiry Date:
+		<input type="text" name="exdate" placeholder="mm/yy" /> <br /> CVV:
+		<input type="text" name="cvv" placeholder="###"> <br />
 		<button type="submit">Submit</button>
 	</form>
 </body>

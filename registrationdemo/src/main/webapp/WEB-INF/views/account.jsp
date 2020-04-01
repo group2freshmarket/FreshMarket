@@ -54,6 +54,7 @@
 			</table>
 			<button type="submit">Submit</button>
 		</form>
+		<a href="home">Back</a>
 	</div>
 </body>
 </html>

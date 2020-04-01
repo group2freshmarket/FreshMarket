@@ -12,6 +12,5 @@
 	<c:forEach var="msg" items="${helloWorld.messages}">
 		<h2>${msg.content}</h2>
 	</c:forEach>
-
 </body>
 </html>

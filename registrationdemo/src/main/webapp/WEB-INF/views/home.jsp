@@ -15,7 +15,6 @@
 </head>
 <body>
 	<div class="container-fluid">
-
 		<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 			<ul class="navbar-nav">
 				<li class="nav-item active"><a class="nav-link" href="home">Home</a></li>
@@ -23,7 +22,6 @@
 				<li class="nav-item"><a class="nav-link" href="logout">LogOut</a></li>
 			</ul>
 		</nav>
-
 		<h2 class="text-center">Items</h2>
 		<form method="post" action="home">
 			<table width="100%" border="1">
@@ -41,8 +39,7 @@
 				<tbody>
 					<c:forEach var="i" items="${itemList}" varStatus="status">
 						<tr>
-							<td><img
-								src='data:image/jpg;base64,<c:out value = " ${imageList[status.index]}"/>' /></td>
+							<td><img src='data:image/jpg;base64,<c:out value = " ${imageList[status.index]}"/>' /></td>
 							<td><c:out value="${i.itemName}" /></td>
 							<td><c:out value="${i.itemType}" /></td>
 							<td><c:out value="${i.itemDesc}" /></td>
@@ -60,6 +57,5 @@
 			<button type="submit">Submit</button>
 		</form>
 	</div>
-
 </body>
 </html>

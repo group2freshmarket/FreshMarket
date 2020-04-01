@@ -20,9 +20,7 @@
 				<li class="nav-item active" style="color: white;">Review Order</li>
 			</ul>
 		</nav>
-
 		<h2>Order for ${user.name}...</h2>
-
 		<table width="100%" border="1">
 			<thead>
 				<tr>
@@ -36,8 +34,7 @@
 			<tbody>
 				<c:forEach var="i" items="${itemList}" varStatus="status">
 					<tr>
-						<td><img
-							src='data:image/jpg;base64,<c:out value = " ${imageList[status.index]}"/>' /></td>
+						<td><img src='data:image/jpg;base64,<c:out value = " ${imageList[status.index]}"/>' /></td>
 						<td><c:out value="${i.itemName}" /></td>
 						<td><c:out value="${i.itemPrice}" /></td>
 						<td><c:out value="${quantityList[status.index]}" /></td>
@@ -61,10 +58,9 @@
 		</table>
 		<form action="review" method="post">
 			<input type="radio" id="delivery" name="method" value="delivery" />
-			<label for="delivery">Delivery</label> 
-			<input type="radio" id="pickup" name="method" value="pickup" /> 
-			<label for="pickup">Pick-up (10% off total)</label> 
-			<br /> 
+			<label for="delivery">Delivery</label> <input type="radio"
+				id="pickup" name="method" value="pickup" /> <label for="pickup">Pick-up
+				(10% off total)</label> <br />
 			<p>Select Time:</p>
 			<select name="time">
 				<option value="8am">8am</option>
@@ -76,11 +72,11 @@
 				<option value="2pm">2pm</option>
 				<option value="3pm">3pm</option>
 				<option value="4pm">4pm</option>
-				<option value="5pm">5pm</option>				
-				<option value="6pm">6pm</option>				
+				<option value="5pm">5pm</option>
+				<option value="6pm">6pm</option>
 				<option value="7pm">7pm</option>
-			</select>
-			<br /><br />
+			</select> <br />
+			<br />
 			<button type="submit">Submit</button>
 		</form>
 	</div>

@@ -27,7 +27,7 @@ public class Purchase_HistoryDaoImpl implements Purchase_HistoryDao {
 		this.jdbcTemplate=jdbcTemplate;
 	}
 
-	private SqlParameterSource getSqlParameterByModelPurchase(Purchase_History p)
+	private SqlParameterSource getSqlParameterByModel(Purchase_History p)
 	{
 		MapSqlParameterSource parameterSource=new MapSqlParameterSource();
 		if(p!=null)
@@ -45,7 +45,7 @@ public class Purchase_HistoryDaoImpl implements Purchase_HistoryDao {
 		try {
 			String sql = "INSERT INTO Purchase_History(pur_date, email, total_Price) VALUES(:pur_date, :email, :total_Price)";
 			
-			jdbcTemplate.update(sql, getSqlParameterByModelPurchase(p));
+			jdbcTemplate.update(sql, getSqlParameterByModel(p));
 			
 		} catch (Exception e) {
 			res = false;
@@ -63,6 +63,19 @@ public class Purchase_HistoryDaoImpl implements Purchase_HistoryDao {
 		params.put("date", date);
 		
 		return (Purchase_History) jdbcTemplate.queryForObject(sql, params, new ItemMapper());
+	}
+	
+	private SqlParameterSource getSqlParameterByModel(int id) {
+		MapSqlParameterSource paramaterSource = new MapSqlParameterSource();
+		paramaterSource.addValue("orderId", id);
+		return paramaterSource;
+	}
+	
+	@Override
+	public Purchase_History getPurchase(int id) {
+		String sql = "SELECT * FROM Purchase_History WHERE orderId=:orderId";
+		
+		return (Purchase_History) jdbcTemplate.queryForObject(sql, getSqlParameterByModel(id), new ItemMapper());
 	}
 	
 	@Override

@@ -1,19 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Review Order</title>
+<link href="<c:url value="/resources/css/bootstrap.min.css" />"
+	rel="stylesheet">
+<script src="<c:url value="/resources/js/jquery-1.11.1.min.js" />"></script>
+<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
 </head>
 <body>
-<h2>Order from....</h2>
-<table>
-	<tr>
-		<th>Item Name</th>
-		<th>Item Price</th>
-		<th>Quantity</th>
-	</tr>
-</table>
+	<div class="container-fluid">
+		<h2>Order from ${date}</h2>
+		<table border="1">
+			<tr>
+				<th>Item Name</th>
+				<th>Item Price</th>
+				<th>Quantity</th>
+			</tr>
+			<c:forEach var="i" items="${details}" varStatus="status">
+				<tr>
+					<td><c:out value="${names[status.index]}" /></td>
+					<td><c:out value="${i.itemPrice}" /></td>
+					<td><c:out value="${i.itemQty}" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+		<a href="account">Back</a>
+	</div>
 </body>
 </html>

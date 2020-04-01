@@ -16,7 +16,7 @@
 <body>
 	<div class="container-fluid">
 		<div class="col-md-offset-2 col-md-7">
-			<h1>Order Processed Successfully!</h1>
+			<h1>${message}</h1>
 			
 			<a href="home">Back to Home</a>
 		</div>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,6 +120,9 @@ public class ReviewController {
 			total = total - discount;
 		}
 		
+		session.removeAttribute("sub");
+		session.setAttribute("total", total);
+		
 		model.addObject("discount", discount);
 		model.addObject("total", total);
 		
@@ -127,12 +131,22 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/process")
-	public String processOrder(HttpServletRequest request) {
+	public String processOrder(HttpServletRequest request, HttpSession session, Model model) {
 		Purchase_History p = new Purchase_History();
-
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		Date date = new Date();
 		
+		p.setDate(format.format(date));
+		p.setEmail((String) session.getAttribute("user_email"));
+		p.setTotal_Price((Double) session.getAttribute("total"));
 		
-		//boolean statusPurchase = purchaseDao.addPurchase(p);
+		boolean statusPurchase = purchaseDao.addPurchase(p);
+		
+		if(statusPurchase == true) {
+			model.addAttribute("message", "Order Successful!");
+		} else {
+			model.addAttribute("message", "Please try again.");
+		}
 		
 		return "process-success";
 	}

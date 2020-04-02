@@ -14,6 +14,11 @@
 </head>
 <body>
 	<div class="container-fluid">
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<ul class="navbar-nav">
+				<li style="color:white;">Edit Account</li>
+			</ul>
+		</nav>
 		<form:form action="editAccount" method="post" modelAttribute="user" cssClass="form-horizontal">
 			<div class="form-group">
 				<label for="email" class="col-md-3 control-label"> Email</label>

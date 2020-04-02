@@ -103,6 +103,7 @@ public class HomeController {
 		return "account";
 	}
 	
+	//Sorts through various forms on account page and redirects to correct page
 	@PostMapping("/account")
 	public String orderDetailsForm(HttpServletRequest request, HttpSession session) {
 		
@@ -115,6 +116,7 @@ public class HomeController {
 		}
 	}
 	
+	//Displays data for specific order
 	@GetMapping("/order_details")
 	public String displayOrderDetails(HttpSession session, Model model) {
 		
@@ -138,6 +140,7 @@ public class HomeController {
 		return "order_details";
 	}
 	
+	//Gathers account info and passes to page to fill into form
 	@GetMapping("/editAccount")
 	public String editAccount(@ModelAttribute("user") User user, Model model, HttpSession session) {
 		
@@ -153,14 +156,10 @@ public class HomeController {
 		return "editAccount";
 	}
 	
+	//Gathers info from form and updates account
 	@PostMapping("/editAccount")
 	public String updateAccount(@ModelAttribute("user") User user, Model model) {
 		boolean status = authDao.updateUser(user);
-		
-		System.out.println("EName : " + user.getEmail());
-		System.out.println("Name : " + user.getName());
-		System.out.println("Password : " + user.getPassword());
-		System.out.println("Type : " + user.getUserType());
 		
 		if(status) {
 			return "account";
@@ -169,6 +168,7 @@ public class HomeController {
 		return "editAccount";
 	}
 	
+	//Gathers info and creates cart but uses session
 	@PostMapping("/home")
 	public String displayData(HttpServletRequest request, HttpSession session) {
 		

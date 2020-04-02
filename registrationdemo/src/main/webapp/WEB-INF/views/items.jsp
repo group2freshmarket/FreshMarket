@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -52,7 +53,7 @@
 							<td><c:out value="${i.itemName}" /></td>
 							<td><c:out value="${i.itemType}" /></td>
 							<td><c:out value="${i.itemCount}" /></td>
-							<td><c:out value="${i.itemPrice}" /></td>
+							<td><fmt:formatNumber type="currency" value="${i.itemPrice}" /></td>
 							<td><c:out value="${i.itemDesc}" /></td>
 							<td><img src='data:image/jpg;base64,<c:out value = " ${imageList[status.index]}"/>' /></td>
 							<td><a href='/FreshMarket/updateItem?itemId=${i.itemId}'>UPDATE ITEMS</a></td>

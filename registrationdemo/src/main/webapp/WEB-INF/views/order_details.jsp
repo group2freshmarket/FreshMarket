@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,11 @@
 </head>
 <body>
 	<div class="container-fluid">
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<ul class="navbar-nav">
+				<li style="color: white;">Order Details</li>
+			</ul>
+		</nav>
 		<h2>Order from ${date}</h2>
 		<table border="1">
 			<tr>
@@ -24,7 +30,7 @@
 			<c:forEach var="i" items="${details}" varStatus="status">
 				<tr>
 					<td><c:out value="${names[status.index]}" /></td>
-					<td><c:out value="${i.itemPrice}" /></td>
+					<td><fmt:formatNumber type="currency" value="${i.itemPrice}" /></td>
 					<td><c:out value="${i.itemQty}" /></td>
 				</tr>
 			</c:forEach>

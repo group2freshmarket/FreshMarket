@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -24,8 +25,8 @@
 	<h2>Order for ${user}</h2>
 	<h4>Method: ${method}</h4>
 	<h4>Time: ${time}</h4>
-	<h4>Discounts: ${discount}</h4>
-	<h4>Total: ${total}</h4>
+	<h4>Discounts: <fmt:formatNumber type="currency" value="${discount}" /></h4>
+	<h4>Total: <fmt:formatNumber type="currency" value="${total}" /></h4>
 	<form method="post" action="process">
 		Card Number: <input type="text" name="cardnumber"
 			placeholder="#### - #### - #### - ####"> <br /> Expiry Date:

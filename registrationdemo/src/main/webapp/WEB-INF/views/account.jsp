@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -49,7 +50,7 @@
 				<c:forEach var="i" items="${purchases}" varStatus="status">
 					<tr>
 						<td><c:out value="${i.date}" /></td>
-						<td><c:out value="${i.total_Price}" /></td>
+						<td><fmt:formatNumber type="currency" value="${i.total_Price}" /></td>
 						<td><input type="radio" name="select" value="${i.orderId}" />
 					</tr>
 				</c:forEach>

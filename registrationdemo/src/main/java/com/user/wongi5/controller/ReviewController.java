@@ -96,6 +96,7 @@ public class ReviewController {
 		return mv;
 	}
 	
+	//Sets data to session and redirects
 	@PostMapping("/review")
 	public String processOrder(HttpSession session, HttpServletRequest request) {
 		session.setAttribute("method", request.getParameter("method"));
@@ -104,6 +105,7 @@ public class ReviewController {
 		return "redirect:/process";
 	}
 
+	//Gathers info about cart and displays all details for user to review before entering payment
 	@GetMapping("/process")
 	public ModelAndView display(@ModelAttribute("user") User user, HttpSession session) {
 		ModelAndView model = new ModelAndView("process");

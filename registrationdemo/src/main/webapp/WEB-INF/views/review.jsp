@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,7 @@
 					<tr>
 						<td><img src='data:image/jpg;base64,<c:out value = " ${imageList[status.index]}"/>' /></td>
 						<td><c:out value="${i.itemName}" /></td>
-						<td><c:out value="${i.itemPrice}" /></td>
+						<td><fmt:formatNumber type="currency" value="${i.itemPrice}" /></td>
 						<td><c:out value="${quantityList[status.index]}" /></td>
 						<td><c:out
 								value="${i.itemPrice * quantityList[status.index]}" /></td>
@@ -44,23 +45,22 @@
 				</c:forEach>
 				<tr>
 					<td colspan='4' align="right">Sub-Total</td>
-					<td><c:out value="${sub}" /></td>
+					<td><fmt:formatNumber type="currency" value="${sub}" /></td>
 				</tr>
 				<tr>
 					<td colspan='4' align="right">Tax</td>
-					<td><c:out value="${tax}" /></td>
+					<td><fmt:formatNumber type="currency" value="${tax}" /></td>
 				</tr>
 				<tr>
 					<td colspan='4' align="right">Total</td>
-					<td><c:out value="${tax+sub}" /></td>
+					<td><fmt:formatNumber type="currency" value="${tax+sub}" /></td>
 				</tr>
 			</tbody>
 		</table>
-		<form action="review" method="post">
+		<form action="review" method="post" style="float:right;">
 			<input type="radio" id="delivery" name="method" value="delivery" />
 			<label for="delivery">Delivery</label> <input type="radio"
-				id="pickup" name="method" value="pickup" /> <label for="pickup">Pick-up
-				(10% off total)</label> <br />
+				id="pickup" name="method" value="pickup" /> <label for="pickup">Pick-up (10% off total)</label> <br />
 			<p>Select Time:</p>
 			<select name="time">
 				<option value="8am">8am</option>
